@@ -2,7 +2,7 @@
 
 import * as io from "socket.io-client";
 
-const socket = io.connect(null, { transports: [ "websocket" ], reconnection: false });
+const socket = io.connect({ transports: [ "websocket" ], reconnection: false });
 
 socket.on("disconnect", onDisconnect);
 
