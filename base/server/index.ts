@@ -8,7 +8,7 @@ const port = process.env.PORT || 3000;
 
 const app = express();
 const server = http.createServer(app);
-const io = SocketIO(server);
+const io = SocketIO(server, { transports: [ "websocket" ]});
 
 app.use("/", express.static(`${__dirname}/../public`));
 
