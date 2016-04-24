@@ -3,6 +3,7 @@
 const fs = require("fs");
 
 function copy(filepath, src, dest) {
+  console.log(`Copying: ${filepath} to ${dest}`);
   const srcPath = (filepath === ".") ? src : (src + "/" + filepath);
   const info = fs.lstatSync(srcPath);
   if (info.isDirectory()) {
@@ -20,7 +21,11 @@ if (projectName == null) {
   process.exit(1);
 }
 
-const execSync = require("child_process").execSync;
+const actualExecSync = require("child_process").execSync;
+function execSync(command) {
+  console.log(`Running: ${command}`);
+  actualExecSync(command);
+}
 
 execSync(`mkdir ${projectName}`);
 process.chdir(`${process.cwd()}/${projectName}`);
@@ -52,3 +57,7 @@ execSync("typings install socket.io --ambient --save");
 execSync("typings install socket.io-client --ambient --save");
 
 execSync("npm run build");
+
+execSync("git init");
+execSync(`git add .`);
+execSync(`git commit -m "Initial project structure"`);
