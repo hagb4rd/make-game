@@ -46,6 +46,7 @@ fs.writeFileSync("package.json", JSON.stringify(pkg, null, 2) + "\n");
 execSync("typings install node --ambient --save");
 execSync("typings install express --ambient --save");
 execSync("typings install serve-static --ambient --save");
+execSync("typings install express-serve-static-core --ambient --save");
 execSync("typings install mime --ambient --save");
 execSync("typings install socket.io --ambient --save");
 execSync("typings install socket.io-client --ambient --save");
