@@ -48,6 +48,7 @@ pkg.scripts = {
 };
 fs.writeFileSync("package.json", JSON.stringify(pkg, null, 2) + "\n");
 
+execSync("npm install -g typings");
 execSync("typings install node --ambient --save");
 execSync("typings install express --ambient --save");
 execSync("typings install serve-static --ambient --save");
