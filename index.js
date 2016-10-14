@@ -48,14 +48,13 @@ pkg.scripts = {
 };
 fs.writeFileSync("package.json", JSON.stringify(pkg, null, 2) + "\n");
 
-execSync("npm install -g typings");
-execSync("typings install node --ambient --save");
-execSync("typings install express --ambient --save");
-execSync("typings install serve-static --ambient --save");
-execSync("typings install express-serve-static-core --ambient --save");
-execSync("typings install mime --ambient --save");
-execSync("typings install socket.io --ambient --save");
-execSync("typings install socket.io-client --ambient --save");
+execSync("npm install @types/node --save");
+execSync("npm install @types/express --save");
+execSync("npm install @types/serve-static --save");
+execSync("npm install @types/express-serve-static-core --save");
+execSync("npm install @types/mime --save");
+execSync("npm install @types/socket.io --save");
+execSync("npm install @types/socket.io-client --save");
 
 execSync("npm run build");
 

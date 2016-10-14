@@ -1,5 +1,3 @@
-/// <reference path="../typings/main.d.ts" />
-
 import * as SocketIO from "socket.io";
 import * as express from "express";
 import * as http from "http";
