@@ -37,13 +37,11 @@ execSync("yarn add express socket.io socket.io-client typescript browserify watc
 
 const pkg = JSON.parse(fs.readFileSync("package.json", { encoding: "utf8" }));
 pkg.scripts = {
-  "build": "yarn run build-server && yarn run build-client",
-  "build-server": "tsc -p server",
-  "build-client": "tsc -p client && browserify client/index.js -o public/index.js",
-  "watch-server": "tsc -w -p server",
-  "watch-client": "tsc -w -p client",
-  "watchify-client": "watchify client/index.js -o public/index.js",
-  "start": "node server"
+  "build": "tsc -p src",
+  "watch": "tsc -w -p src",
+  "browserify-client": "browserify src/client/index.js -o public/index.js",
+  "watchify-client": "watchify src/client/index.js -o public/index.js",
+  "start": "node src/server"
 };
 fs.writeFileSync("package.json", JSON.stringify(pkg, null, 2) + "\n");
 

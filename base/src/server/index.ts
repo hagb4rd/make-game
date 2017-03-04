@@ -8,7 +8,7 @@ const app = express();
 const server = http.createServer(app);
 const io = SocketIO(server, { transports: [ "websocket" ]});
 
-app.use("/", express.static(`${__dirname}/../public`));
+app.use("/", express.static(`${__dirname}/../../public`));
 
 server.listen(port, () => {
   console.log(`Server started on port ${port}.`);
