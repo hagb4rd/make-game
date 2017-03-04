@@ -29,16 +29,15 @@ function execSync(command) {
 
 execSync(`mkdir ${projectName}`);
 process.chdir(`${process.cwd()}/${projectName}`);
-execSync("npm init -y");
+execSync("yarn init -y");
 
 copy(".", `${__dirname}/base`, process.cwd());
 
-execSync("npm install express socket.io --save");
-execSync("npm install socket.io-client typescript watchify --save-dev");
+execSync("yarn add express socket.io socket.io-client typescript browserify watchify");
 
 const pkg = JSON.parse(fs.readFileSync("package.json", { encoding: "utf8" }));
 pkg.scripts = {
-  "build": "npm run build-server && npm run build-client",
+  "build": "yarn run build-server && yarn run build-client",
   "build-server": "tsc -p server",
   "build-client": "tsc -p client && browserify client/index.js -o public/index.js",
   "watch-server": "tsc -w -p server",
@@ -48,15 +47,11 @@ pkg.scripts = {
 };
 fs.writeFileSync("package.json", JSON.stringify(pkg, null, 2) + "\n");
 
-execSync("npm install @types/node --save");
-execSync("npm install @types/express --save");
-execSync("npm install @types/serve-static --save");
-execSync("npm install @types/express-serve-static-core --save");
-execSync("npm install @types/mime --save");
-execSync("npm install @types/socket.io --save");
-execSync("npm install @types/socket.io-client --save");
+execSync("yarn add @types/node");
+execSync("yarn add @types/express @types/serve-static @types/express-serve-static-core @types/mime");
+execSync("yarn add @types/socket.io @types/socket.io-client");
 
-execSync("npm run build");
+execSync("yarn run build");
 
 execSync("git init");
 execSync(`git add .`);
