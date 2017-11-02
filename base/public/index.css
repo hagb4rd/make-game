@@ -31,7 +31,7 @@ input, textarea, select, button { font: inherit; }
 
 .side { display: flex; flex-flow: column; }
 .side .buttons { display: flex; }
-.side .buttons > div { flex: 1; text-align: center; padding: 0.5em; background: #bbb; color: #777; }
+.side .buttons > div { flex: 1; text-align: center; padding: 0.5em; background: #bbb; color: #777; cursor: pointer; }
 .side .buttons > div.home { flex: initial; }
 .side .buttons > div:not(:last-child) { border-right: 1px solid #aaa; }
 .side .buttons > div.active { background: #ddd; font-weight: bold; color: #444; }
