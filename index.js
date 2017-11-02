@@ -2,6 +2,12 @@
 
 const fs = require("fs");
 
+function replaceVars(text) {
+  return text
+    .replace(/\$\$\$GAME_NAME\$\$\$/g, projectName)
+    .replace(/\$\$\$GAME_DESCRIPTION\$\$\$/g, "A multiplayer game.");
+}
+
 function copy(filepath, src, dest) {
   console.log(`Copying: ${filepath} to ${dest}`);
   const srcPath = (filepath === ".") ? src : (src + "/" + filepath);
@@ -11,7 +17,8 @@ function copy(filepath, src, dest) {
     const entries = fs.readdirSync(srcPath);
     for (const entry of entries) copy(`${filepath}/${entry}`, src, dest);
   } else {
-    fs.writeFileSync(`${dest}/${filepath}`, fs.readFileSync(srcPath));
+    if (srcPath.endsWith(".html") || srcPath.endsWith(".ts")) fs.writeFileSync(`${dest}/${filepath}`, replaceVars(fs.readFileSync(srcPath, "utf8")));
+    else fs.writeFileSync(`${dest}/${filepath}`, fs.readFileSync(srcPath));
   }
 }
 

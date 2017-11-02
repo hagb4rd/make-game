@@ -1,9 +1,23 @@
+import { $, $$, $make, $remove } from "./helpers";
 import * as io from "socket.io-client";
 
-const socket = io.connect({ transports: [ "websocket" ], reconnection: false });
+export const socket = io.connect({ transports: [ "websocket" ], reconnection: false });
+
+import * as lobby from "./lobby";
+import "./room";
 
 socket.on("disconnect", onDisconnect);
 
+socket.emit("lobby:setName", "Guest");
+
+if (window.location.pathname.startsWith("/play/")) {
+  const roomName = window.location.pathname.substring("/play/".length);
+
+  socket.emit("lobby:joinRoom", roomName);
+} else {
+  socket.emit("lobby:getRoomsList", lobby.onEnter);
+}
+
 function onDisconnect() {
-  document.body.innerHTML = "Whoops, you have been disconnected. Plz reload the page.";
+  document.body.innerHTML = `<div class="disconnected big">Whoops, you got disconnected. Please reload the page.</div>`;
 }
