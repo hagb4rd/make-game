@@ -33,7 +33,7 @@ execSync("yarn init -y");
 
 copy(".", `${__dirname}/base`, process.cwd());
 
-execSync("yarn add express socket.io socket.io-client typescript browserify watchify");
+execSync("yarn add express socket.io socket.io-client typescript browserify watchify lodash");
 
 const pkg = JSON.parse(fs.readFileSync("package.json", { encoding: "utf8" }));
 pkg.scripts = {
@@ -47,7 +47,7 @@ fs.writeFileSync("package.json", JSON.stringify(pkg, null, 2) + "\n");
 
 execSync("yarn add @types/node");
 execSync("yarn add @types/express @types/serve-static @types/express-serve-static-core @types/mime");
-execSync("yarn add @types/socket.io @types/socket.io-client");
+execSync("yarn add @types/socket.io @types/socket.io-client @types/lodash");
 
 execSync("yarn run build");
 
