@@ -11,6 +11,15 @@ input, textarea, select, button { font: inherit; }
 .lobby .createRoom { flex: 1; }
 .lobby h1 { margin: 0; padding-bottom: 1em; }
 
+.lobby .rooms table { border-collapse: collapse; }
+.lobby .rooms tr { cursor: pointer; background: #eee; }
+.lobby .rooms tr:hover { background: #888; }
+.lobby .rooms tr:active { background: #666; color: #fff; }
+.lobby .rooms td { padding: 0.5em; }
+.lobby .rooms td.playerCount { width: 0; }
+.lobby .rooms td.roomName { width: 100%; }
+.lobby .rooms td.playerCount div { background: #ccc; padding: 0.25em 0.5em; border-radius: 0.5em; }
+
 /* Room */
 .room { display: flex; height: 100%; }
 

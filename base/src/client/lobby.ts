@@ -10,6 +10,8 @@ const createRoomNameElt = $(".lobby .createRoom input[name=roomName]") as HTMLIn
 // const unlistedElt = $(".lobby .createRoom input[name=unlisted]") as HTMLInputElement;
 
 const roomsListElt = $(".lobby .rooms tbody") as HTMLTableSectionElement;
+roomsListElt.addEventListener("click", onRoomListClick);
+
 const noRoomsElt = $(".lobby .rooms .none");
 const refreshElt = $(".lobby .refresh") as HTMLButtonElement;
 refreshElt.addEventListener("click", onRefreshClick);
@@ -32,10 +34,23 @@ export function onRoomList(rooms: RoomListEntry[]) {
 
   for (const room of rooms) {
     const row = $make("tr", undefined, { parent: roomsListElt });
+    row.dataset["roomName"] = room.name;
 
-    $make("td", undefined, { parent: row, textContent: room.playerCount.toString() });
-    $make("td", undefined, { parent: row, textContent: room.name });
+    const playerCountCell = $make("td", "playerCount", { parent: row });
+    $make("div", undefined, { parent: playerCountCell, textContent: room.playerCount.toString() })
+    $make("td", "roomName", { parent: row, textContent: room.name });
   }
+}
+
+function onRoomListClick(event: MouseEvent) {
+  let target = event.target as HTMLElement;
+
+  while (target.tagName !== "TR") {
+    if (target === event.currentTarget) return;
+    target = target.parentElement!;
+  }
+
+  joinRoom(target.dataset["roomName"]!);
 }
 
 function onCreateRoomFormSubmit(this: HTMLFormElement, event: Event) {
@@ -46,11 +61,15 @@ function onCreateRoomFormSubmit(this: HTMLFormElement, event: Event) {
   const roomName = createRoomNameElt.value.replace(/ /g, "_");
   // const unlisted = unlistedElt.checked;
 
+  joinRoom(roomName);
+}
+
+function joinRoom(roomName: string) {
   socket.emit("lobby:joinRoom", roomName);
 
-  $(".lobby").hidden = true;
-  $(".loading").hidden = false;
-}
+    $(".lobby").hidden = true;
+    $(".loading").hidden = false;
+  }
 
 function onRefreshClick() {
   refreshElt.disabled = true;
