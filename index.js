@@ -17,7 +17,7 @@ function copy(filepath, src, dest) {
     const entries = fs.readdirSync(srcPath);
     for (const entry of entries) copy(`${filepath}/${entry}`, src, dest);
   } else {
-    if (srcPath.endsWith(".html") || srcPath.endsWith(".ts")) fs.writeFileSync(`${dest}/${filepath}`, replaceVars(fs.readFileSync(srcPath, "utf8")));
+    if (srcPath.endsWith(".html") || srcPath.endsWith(".ts") || srcPath.endsWith(".json")) fs.writeFileSync(`${dest}/${filepath}`, replaceVars(fs.readFileSync(srcPath, "utf8")));
     else fs.writeFileSync(`${dest}/${filepath}`, fs.readFileSync(srcPath));
   }
 }

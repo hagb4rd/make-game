@@ -1,0 +1,8 @@
+{
+  "name": "$$$GAME_NAME$$$",
+  "short_name": "$$$GAME_NAME$$$",
+  "start_url": ".",
+  "display": "standalone",
+  "background_color": "#fff",
+  "description": "$$$GAME_DESCRIPTION$$$"
+}
