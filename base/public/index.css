@@ -41,7 +41,7 @@ input, textarea, select, button { font: inherit; }
 .side .tabs > div { flex: 1; }
 
 .chat { display: flex; flex-flow: column; }
-.chat .log { flex: 1; overflow-y: scroll; padding: 0.5em; word-wrap: break-word; background: #888; }
+.chat .log { flex: 1; overflow-y: scroll; padding: 0.5em; word-wrap: break-word; word-break: break-all; white-space: pre-wrap; background: #888; }
 .chat .input { font-size: 0; }
 .chat .input textarea {
   width: 100%; resize: none;
