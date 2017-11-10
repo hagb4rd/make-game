@@ -12,6 +12,9 @@
   <div class="lobby" hidden>
     <div class="top">
         <h1>$$$GAME_NAME$$$</h1>
+
+        <div>Welcome <span class="username"></span>. <button class="changeUsername">Change name</button></div>
+
         <div class="createRoom">
             <form>
               <div>
@@ -62,6 +65,20 @@
           <div class="playerList" hidden></div>
         </div>
       </div>
+  </div>
+
+  <div class="setupUsername" hidden>
+    <h1>$$$GAME_NAME$$$</h1>
+
+    <div class="description">$$$GAME_DESCRIPTION$$$</div>
+
+    <form>
+      <div class="label">Choose a display name</div>
+      <div>
+        <input type="text" name="username" placeholder="Guest" pattern="[a-zA-Z0-9_ ]{1,20}" required maxlength="20" title="A-Z, a-z, 0-9, _" autofocus />
+        <button>Go</button>
+    </div>
+    </form>
   </div>
 
   <div class="loading big">Loading...</div>

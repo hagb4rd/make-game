@@ -1,7 +1,12 @@
 import { $, $$, $make, $remove } from "./helpers";
-import { socket } from "./index";
+import { username, socket } from "./index";
+import * as setupUsername from "./setupUsername";
 
 import { RoomListEntry } from "../server/rooms";
+
+const usernameElt = $(".lobby .username") as HTMLElement;
+const usernameChangeButtonElt = $(".lobby .changeUsername") as HTMLButtonElement;
+usernameChangeButtonElt.addEventListener("click", onChangeUsernameClick)
 
 const createRoomFormElt = $(".lobby .createRoom form") as HTMLFormElement;
 createRoomFormElt.addEventListener("submit", onCreateRoomFormSubmit);
@@ -25,10 +30,19 @@ const recentRoomsListElt = $(".lobby .recent.rooms tbody") as HTMLTableSectionEl
 recentRoomsListElt.addEventListener("click", onRoomListClick);
 
 export function onEnter(rooms: RoomListEntry[]) {
+  usernameElt.textContent = username;
+
   onRoomList(rooms);
 
   $(".loading").hidden = true;
   $(".lobby").hidden = false;
+}
+
+function onChangeUsernameClick(this: HTMLButtonElement, event: MouseEvent) {
+  event.preventDefault();
+
+  $(".lobby").hidden = true;
+  setupUsername.show();
 }
 
 function onCreateRoomFormSubmit(this: HTMLFormElement, event: Event) {
