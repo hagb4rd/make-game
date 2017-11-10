@@ -13,7 +13,7 @@ socket.emit("lobby:setName", "Guest");
 if (window.location.pathname.startsWith("/play/")) {
   const roomName = window.location.pathname.substring("/play/".length);
 
-  socket.emit("lobby:joinRoom", roomName);
+  lobby.joinRoom(roomName);
 } else {
   socket.emit("lobby:getRoomsList", lobby.onEnter);
 }

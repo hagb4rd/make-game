@@ -7,14 +7,22 @@ const createRoomFormElt = $(".lobby .createRoom form") as HTMLFormElement;
 createRoomFormElt.addEventListener("submit", onCreateRoomFormSubmit);
 
 const createRoomNameElt = $(".lobby .createRoom input[name=roomName]") as HTMLInputElement;
-// const unlistedElt = $(".lobby .createRoom input[name=unlisted]") as HTMLInputElement;
 
-const roomsListElt = $(".lobby .rooms tbody") as HTMLTableSectionElement;
+const roomsListElt = $(".lobby .live.rooms tbody") as HTMLTableSectionElement;
 roomsListElt.addEventListener("click", onRoomListClick);
+let liveRooms: RoomListEntry[];
+const liveRoomNames: string[] = [];
 
-const noRoomsElt = $(".lobby .rooms .none");
+const noLiveRoomsElt = $(".lobby .live.rooms .none");
 const refreshElt = $(".lobby .refresh") as HTMLButtonElement;
 refreshElt.addEventListener("click", onRefreshClick);
+
+const recentRoomsJSON = localStorage.getItem("recentRooms");
+const recentRoomNames: string[] = recentRoomsJSON != null ? JSON.parse(recentRoomsJSON) : [];
+
+const recentRoomsElt = $(".lobby .recent.rooms");
+const recentRoomsListElt = $(".lobby .recent.rooms tbody") as HTMLTableSectionElement;
+recentRoomsListElt.addEventListener("click", onRoomListClick);
 
 export function onEnter(rooms: RoomListEntry[]) {
   onRoomList(rooms);
@@ -23,23 +31,49 @@ export function onEnter(rooms: RoomListEntry[]) {
   $(".lobby").hidden = false;
 }
 
+function onCreateRoomFormSubmit(this: HTMLFormElement, event: Event) {
+  if (!this.checkValidity()) return;
+
+  event.preventDefault();
+
+  const roomName = createRoomNameElt.value.replace(/ /g, "_");
+
+  joinRoom(roomName);
+}
+
 export function onRoomList(rooms: RoomListEntry[]) {
+  liveRooms = rooms;
+
   refreshElt.disabled = false;
   refreshElt.textContent = refreshElt.dataset["enabled"]!;
 
   if (rooms.length === 0) {
-    noRoomsElt.hidden = false;
-    return;
+    noLiveRoomsElt.hidden = false;
+  } else {
+    liveRoomNames.length = 0;
+    for (const room of rooms) {
+      liveRoomNames.push(room.name);
+      makeRoomElement(room, roomsListElt);
+    }
   }
 
-  for (const room of rooms) {
-    const row = $make("tr", undefined, { parent: roomsListElt });
-    row.dataset["roomName"] = room.name;
+  recentRoomsListElt.innerHTML = "";
 
-    const playerCountCell = $make("td", "playerCount", { parent: row });
-    $make("div", undefined, { parent: playerCountCell, textContent: room.playerCount.toString() })
-    $make("td", "roomName", { parent: row, textContent: room.name });
+  for (const roomName of recentRoomNames) {
+    if (liveRoomNames.indexOf(roomName) !== -1) continue;
+    makeRoomElement({ name: roomName, playerCount: 0 }, recentRoomsListElt);
   }
+
+  recentRoomsElt.hidden = recentRoomsListElt.childElementCount === 0;
+}
+
+function makeRoomElement(room: RoomListEntry, parent: HTMLElement) {
+  const row = $make("tr", undefined, { parent });
+  row.dataset["roomName"] = room.name;
+
+  const playerCountCell = $make("td", "playerCount", { parent: row });
+  $make("div", undefined, { parent: playerCountCell, textContent: room.playerCount.toString() })
+  $make("td", "roomName", { parent: row, textContent: room.name });
 }
 
 function onRoomListClick(event: MouseEvent) {
@@ -53,30 +87,26 @@ function onRoomListClick(event: MouseEvent) {
   joinRoom(target.dataset["roomName"]!);
 }
 
-function onCreateRoomFormSubmit(this: HTMLFormElement, event: Event) {
-  if (!this.checkValidity()) return;
+export function joinRoom(roomName: string) {
+  const recentIndex = recentRoomNames.indexOf(roomName);
+  if (recentIndex !== -1) recentRoomNames.splice(recentIndex, 1);
+  recentRoomNames.unshift(roomName);
+  if (recentRoomNames.length > 5) recentRoomNames.length = 5;
+  localStorage.setItem("recentRooms", JSON.stringify(recentRoomNames));
 
-  event.preventDefault();
-
-  const roomName = createRoomNameElt.value.replace(/ /g, "_");
-  // const unlisted = unlistedElt.checked;
-
-  joinRoom(roomName);
-}
-
-function joinRoom(roomName: string) {
   socket.emit("lobby:joinRoom", roomName);
 
-    $(".lobby").hidden = true;
-    $(".loading").hidden = false;
-  }
+  $(".lobby").hidden = true;
+  $(".loading").hidden = false;
+}
 
 function onRefreshClick() {
   refreshElt.disabled = true;
   refreshElt.textContent = refreshElt.dataset["disabled"]!;
 
   roomsListElt.innerHTML = "";
-  noRoomsElt.hidden = true;
+  noLiveRoomsElt.hidden = true;
+  recentRoomsElt.hidden = true;
 
   socket.emit("lobby:getRoomsList", onRoomList);
 }

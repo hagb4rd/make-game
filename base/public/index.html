@@ -18,15 +18,11 @@
                 <input type="text" name="roomName" placeholder="Create your own room" pattern="[a-zA-Z0-9_ ]{1,20}" required maxlength="20" title="A-Z, a-z, 0-9, _" autofocus />
                 <button>Go</button>
               </div>
-              <!-- <div>
-                <input type="checkbox" name="unlisted" id="unlistedCheckbox">
-                <label for="unlistedCheckbox">Unlisted</label>
-              </div> -->
             </form>
           </div>
       </div>
 
-    <div class="rooms">
+    <div class="live rooms">
       <h2>Live rooms <button class="refresh" disabled data-disabled="Refreshing..." data-enabled="↻"></button></h2>
 
       <table>
@@ -35,6 +31,15 @@
       </table>
 
       <div class="none" hidden>There are no live rooms at the moment.</div>
+    </div>
+
+    <div class="recent rooms" hidden>
+      <h2>Recent rooms</h2>
+
+      <table>
+        <tbody>
+        </tbody>
+      </table>
     </div>
   </div>
 
