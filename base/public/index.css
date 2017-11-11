@@ -7,9 +7,12 @@ body > .big { padding: 1em; font-size: 2em; }
 input, textarea, select, button { font: inherit; }
 
 /* Lobby */
-.lobby { padding: 1em; }
-.lobby .createRoom { flex: 1; }
-.lobby h1 { margin: 0; padding-bottom: 1em; }
+.lobby { padding: 1em; max-width: 600px; margin: 0 auto; }
+.lobby { text-align: center; }
+.lobby h1 { margin: 0; padding-bottom: 0.5em; }
+.lobby .top .description { padding: 0.5em; }
+.lobby .top .welcome { padding: 0.5em; }
+.lobby .createRoom { flex: 1; padding: 0.5em; }
 
 .lobby .rooms table { border-collapse: collapse; }
 .lobby .rooms tr { cursor: pointer; background: #eee; }
