@@ -54,6 +54,8 @@ function onSetName(this: LobbySocket, playerName: string) {
   if (this.lobbyData.roomName != null) { helpers.fail.call(this, onSetName.name, "Can't change name after joining room."); return; }
 
   this.lobbyData.pub.playerName = playerName;
+
+  helpers.log.call(this, onSetName.name, `Set name to ${playerName}.`);
 }
 
 function onJoinRoom(this: LobbySocket, roomName: string) {
