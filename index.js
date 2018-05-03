@@ -36,11 +36,11 @@ function execSync(command) {
 
 execSync(`mkdir ${projectName}`);
 process.chdir(`${process.cwd()}/${projectName}`);
-execSync("yarn init -y");
+execSync("npm init -y");
 
 copy(".", `${__dirname}/base`, process.cwd());
 
-execSync("yarn add express socket.io socket.io-client typescript browserify watchify lodash");
+execSync("npm install express socket.io socket.io-client typescript browserify watchify lodash");
 
 const pkg = JSON.parse(fs.readFileSync("package.json", { encoding: "utf8" }));
 pkg.scripts = {
@@ -52,11 +52,11 @@ pkg.scripts = {
 };
 fs.writeFileSync("package.json", JSON.stringify(pkg, null, 2) + "\n");
 
-execSync("yarn add @types/node");
-execSync("yarn add @types/express @types/serve-static @types/express-serve-static-core @types/mime");
-execSync("yarn add @types/socket.io @types/socket.io-client @types/lodash");
+execSync("npm install @types/node");
+execSync("npm install @types/express @types/serve-static @types/express-serve-static-core @types/mime");
+execSync("npm install @types/socket.io @types/socket.io-client @types/lodash");
 
-execSync("yarn run build");
+execSync("npm run build");
 
 execSync("git init");
 execSync(`git add .`);
