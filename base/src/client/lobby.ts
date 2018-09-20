@@ -64,6 +64,7 @@ export function onRoomList(rooms: RoomListEntry[]) {
   if (rooms.length === 0) {
     noLiveRoomsElt.hidden = false;
   } else {
+    roomsListElt.innerHTML = "";
     liveRoomNames.length = 0;
     for (const room of rooms) {
       liveRoomNames.push(room.name);

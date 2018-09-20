@@ -1,0 +1,11 @@
+- make package.json private
+- maybe generate the manifest.json dynamically and add it to .gitignore?
+
+port all the changes from jklm
+- room -> gameRoom
+- roomData -> gameRoom directement
+- pouvoir être déco sans être retiré du jeu (timeout) !
+- pub state merging with updatePubData()
+- content system with categories, reviews, etc.
+- keep lobby player IDs fully private? and just have in-game-room IDs. or just have lobby player secrets and incremental lobby player ids, seems simpler!
+- when window is small, make side hover instead of resize the main pane
